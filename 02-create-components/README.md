@@ -85,20 +85,20 @@ imports: [
 The search component can begin as just an input FormControl:
 ```
 export class SearchComponent implements OnInit {
-	searchControl = new FormControl('');
+    searchControl = new FormControl('');
 
-	constructor() { }
+    constructor() { }
 
-	ngOnInit(): void {
-	}
+    ngOnInit(): void {
+    }
 
 }
 ```
 ```
 <mat-form-field>
-	<input matInput
-		type="text" 
-		[formControl]="searchControl">
+    <input matInput
+        type="text" 
+        [formControl]="searchControl">
 </mat-form-field>
 ```
 
@@ -128,34 +128,76 @@ ng g enum sort/sort-type
 ```
 ```
 export enum SortType {
-	Chronological = 'chronological',
-	Alphabetical = 'alphabetical'
+    Chronological = 'chronological',
+    Alphabetical = 'alphabetical'
 }
 ```
 
 The two button toggles within the group represent the two sort types:
 ```
 <mat-button-toggle-group>
-	<mat-button-toggle value="sortTypes.Chronological">
-		Date
-	</mat-button-toggle>
-	<mat-button-toggle value="sortTypes.Alphabetical">
-		A-Z
-	</mat-button-toggle>
+    <mat-button-toggle value="sortTypes.Chronological">
+        Date
+    </mat-button-toggle>
+    <mat-button-toggle value="sortTypes.Alphabetical">
+        A-Z
+    </mat-button-toggle>
 </mat-button-toggle-group>
 ```
 
 Objectify the SortType enum for use in the template by creating a class field for sort types:
 ```
 export class SortComponent implements OnInit {
-	sortTypes = SortType;
+    sortTypes = SortType;
 
-	constructor() { }
+    constructor() { }
 
-	ngOnInit(): void {
-	}
+    ngOnInit(): void {
+    }
 }
 ```
 
-### _TileGridComponent (coming soon)_
+### _TileComponent_
+
+Let's build out the tile component next before we sculpt the grid that holds the tiles:
+
+The tile component will be an Angular Material [card](https://material.angular.io/components/card/overview), so import that into ResultsModule:
+
+```
+imports: [
+    CommonModule,
+    MatCardModule
+]
+```
+Here is the typical structure of a card:
+```
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="uses-background-image"></div>
+    <mat-card-title>Title</mat-card-title>
+    <mat-card-subtitle>Subtitle</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://path/to/main/card/image.jpg" alt="Picture of a thing">
+  <mat-card-content>
+    <p>
+      Here is a description of the thing...
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>More</button>
+    <button mat-button>View Page</button>
+  </mat-card-actions>
+</mat-card>
+
+```
+Given this DOM blueprint, our viewModel looks something like this:
+* Thumbnail image for the header
+* Title
+* Subtitle (could be a category, e.g. "Animal" for Duck or "Actor" for Keanu Reeves)
+* Main image from the article (random pick from available images)
+* Content (abridged after so many characters)
+* More() event displays more content (sidebar stats) and toggles label between "More" and "Less"
+* ViewPage() displays the full article inside of a modal
+
+Next, let's send a request to Wikipedia to see what data we get back so we can map fields from the http 
 
