@@ -42,7 +42,9 @@ I see three sub-components within Layout:
 2. Sort selection
 3. Tile Grid
 
-Tile Grid also contains an array of tile sub-components.
+Tile Grid also contains an array of tile sub-components. There are two types of types of tiles:
+1. ListTile (display a list of articles)
+2. CardTile (display key elements of a single article)
 
 So our hierarchy looks like so:
 
@@ -51,7 +53,8 @@ So our hierarchy looks like so:
 * * * Search
 * * * Sort
 * * * Tile Grid 
-* * * * Tile
+* * * * ListTile
+* * * * CardTile
 
 Now let's create these sub-components and corresponding modules. For the tiles, let's call that module `results` and declare the tile grid and tile components inside:
 
@@ -157,15 +160,163 @@ export class SortComponent implements OnInit {
 }
 ```
 
-### _TileComponent_
+### _ListTileComponent_
 
-Let's build out the tile component next before we sculpt the grid that holds the tiles:
+Let's start with a component scaffold:
+```
+ng g component results/list-tile
+```
+
+Next, our list tile component will be a Material [list](https://material.angular.io/components/list/overview), so import that into ResultsModule:
+
+```
+imports: [
+    CommonModule,
+    MatListModule
+]
+```
+
+In order to figure out what we want to display in the list, let's send a request to Wikipedia and see what kind of results we get back. From these results, we can deduce what the viewModel for our list component will look like.
+
+Using Postman, let's send a GET request to Wikipedia to find articles with "Chuck", "Norris", "Betty", or "White":
+```
+https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Chuck%20Norris|Betty%20White&format=json
+```
+
+Here's what comes back:
+```
+{
+    "batchcomplete": "",
+    "continue": {
+        "sroffset": 10,
+        "continue": "-||"
+    },
+    "query": {
+        "searchinfo": {
+            "totalhits": 230
+        },
+        "search": [
+            {
+                "ns": 0,
+                "title": "Chuck Hagel",
+                "pageid": 363276,
+                "size": 115723,
+                "wordcount": 10279,
+                "snippet": "February 12, 2006. Retrieved January 4, 2012. Dufour, Jeff. Glenn Close and <span class=\"searchmatch\">Chuck</span> <span class=\"searchmatch\">Norris</span> push pet projects. The Hill, online edition, Under The Dome, May 11,",
+                "timestamp": "2020-03-08T16:59:26Z"
+            },
+            {
+                "ns": 0,
+                "title": "Betty Blayton-Taylor",
+                "pageid": 32444471,
+                "size": 15791,
+                "wordcount": 1760,
+                "snippet": "<span class=\"searchmatch\">Betty</span> Blayton-Taylor (July 10, 1937 – October 2, 2016) was an American activist, advocate, artist, arts administrator and educator, and lecturer. As an",
+                "timestamp": "2020-05-01T16:23:17Z"
+            },
+            {
+                "ns": 0,
+                "title": "Mama Steps Out",
+                "pageid": 44501578,
+                "size": 3343,
+                "wordcount": 266,
+                "snippet": "Alice Brady as Ada Cuppy <span class=\"searchmatch\">Betty</span> Furness as Leila Cuppy Dennis Morgan as <span class=\"searchmatch\">Chuck</span> Thompson Gene Lockhart as Mr. Sims Edward <span class=\"searchmatch\">Norris</span> as Ferdie Fisher Gregory",
+                "timestamp": "2020-05-26T00:40:29Z"
+            },
+            {
+                "ns": 0,
+                "title": "List of people from Newport Beach, California",
+                "pageid": 44851195,
+                "size": 11542,
+                "wordcount": 984,
+                "snippet": "producer Mark McGrath, singer, Sugar Ray Mike Ness of Social Distortion <span class=\"searchmatch\">Chuck</span> <span class=\"searchmatch\">Norris</span>, martial artist and actor Cathy Rigby, gymnast and actress Gwen Stefani",
+                "timestamp": "2020-05-16T03:33:28Z"
+            },
+            {
+                "ns": 0,
+                "title": "R. Norris Williams",
+                "pageid": 5052948,
+                "size": 18308,
+                "wordcount": 1137,
+                "snippet": "Richard &quot;Dick&quot; <span class=\"searchmatch\">Norris</span> Williams II (January 29, 1891 – June 2, 1968), generally known as R. <span class=\"searchmatch\">Norris</span> Williams, was an American tennis player and RMS Titanic",
+                "timestamp": "2020-05-26T20:29:34Z"
+            },
+            {
+                "ns": 0,
+                "title": "Bruce Lee",
+                "pageid": 37313,
+                "size": 103551,
+                "wordcount": 11137,
+                "snippet": "Beach, California, Lee had met karate champion <span class=\"searchmatch\">Chuck</span> <span class=\"searchmatch\">Norris</span>. In Way of the Dragon Lee introduced <span class=\"searchmatch\">Norris</span> to moviegoers as his opponent, their showdown has",
+                "timestamp": "2020-05-27T21:32:59Z"
+            },
+            {
+                "ns": 0,
+                "title": "The Legend of Bruce Lee",
+                "pageid": 19844058,
+                "size": 29144,
+                "wordcount": 4260,
+                "snippet": "as Mark Dacascos, Ray Park, Gary Daniels, Ernest Miller, and Michael Jai <span class=\"searchmatch\">White</span> are also featured in the series, playing the roles of martial artists prominent",
+                "timestamp": "2020-05-20T07:56:16Z"
+            },
+            {
+                "ns": 0,
+                "title": "Donny & Marie (1976 TV series)",
+                "pageid": 21624189,
+                "size": 12312,
+                "wordcount": 1442,
+                "snippet": "Miller Erin Moran Donny Most Jim Nabors Haywood Nelson Olivia Newton-John <span class=\"searchmatch\">Chuck</span> <span class=\"searchmatch\">Norris</span> Susan Olsen The Osmonds Ron Palillo Minnie Pearl Susan Perkins Bernadette",
+                "timestamp": "2020-05-11T09:31:01Z"
+            },
+            {
+                "ns": 0,
+                "title": "Lee Marvin",
+                "pageid": 18433,
+                "size": 45016,
+                "wordcount": 3793,
+                "snippet": "years older). His final appearance was in The Delta Force (1986) with <span class=\"searchmatch\">Chuck</span> <span class=\"searchmatch\">Norris</span>, playing a role turned down by Charles Bronson. Marvin was a Democrat",
+                "timestamp": "2020-05-16T11:48:35Z"
+            },
+            {
+                "ns": 0,
+                "title": "List of Western films 1950–54",
+                "pageid": 12383761,
+                "size": 104042,
+                "wordcount": 14,
+                "snippet": "Virginia Gibson, Tommy Rall, <span class=\"searchmatch\">Betty</span> Carr, Russ Tamblyn, Nancy Kilgas United States musical Western Shot in the Frontier Jules <span class=\"searchmatch\">White</span> Moe Howard, Larry Fine,",
+                "timestamp": "2020-03-13T12:49:42Z"
+            }
+        ]
+    }
+}
+```
+
+From the shape of the data we get back, I think we can provide enough information to the user by simply displaying the title and the snippet. Even better, the snippet already has a span wrapped around our search term match so that we can easily highlight it using CSS.
+
+Let's start with the viewModel by creating a class to organize each search result as a list item:
+```
+ng g class results/list-tile/list-item
+```
+```
+export class ListItem {
+	title: string;
+	snippet: string;
+}
+```
+
+Next, let's design what each list item will look like in the component's template file. We'll start by adding the list as component property in list-item.component.ts:
+```
+
+
+
+### TODO: Complete CardTile
 
 The tile component will be an Angular Material [card](https://material.angular.io/components/card/overview), so import that into ResultsModule:
 
 ```
 imports: [
     CommonModule,
+    MatListModule,
     MatCardModule
 ]
 ```
@@ -198,6 +349,3 @@ Given this DOM blueprint, our viewModel looks something like this:
 * Content (abridged after so many characters)
 * More() event displays more content (sidebar stats) and toggles label between "More" and "Less"
 * ViewPage() displays the full article inside of a modal
-
-Next, let's send a request to Wikipedia to see what data we get back so we can map fields from the http 
-
