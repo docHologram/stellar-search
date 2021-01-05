@@ -1,5 +1,7 @@
 # Stellar Search
 
+Stellar Search utilizes Google Search as an exercise in using Observables in Angular to produce a dynamic typeahead search field. The results are displayed in cards with an image, title and description. Clicking on a card takes you to that card's associated website in a new tab.
+
 ## Stellar Stack
 
 - [Angular CLI](https://github.com/angular/angular-cli) v9.1.4
