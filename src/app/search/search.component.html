@@ -1,0 +1,39 @@
+<main class="container stellar">
+	<div class="row">
+		<div class="col">
+			<h1 class="stellar__title">Stellar Search</h1>
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<mat-form-field
+						color="accent"
+						class="mat-focused stellar__search-field">
+						<input matInput
+							#searchInput
+							class="stellar__search-input"
+							placeholder="Let's look for stuff!">
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<h2 class="stellar__sub-title">Search Results</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3" *ngFor="let result of searchResults">
+					<div class="card stellar__card"
+						(click)="openResultWebPage(result.pageUrl)">
+						<img [src]="result.image.url"
+							class="card-img-top stellar__card-image"
+							[alt]="result.image.alt">
+						<div class="card-body">
+							<h5 class="stellar__card-title">{{ result.title }}</h5>
+							<p class="stellar__card-text">{{ result.snippet }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+

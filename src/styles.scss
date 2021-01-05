@@ -1,0 +1,70 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Add Bootstrap */
+@import '~bootstrap/scss/bootstrap';
+
+/* Add Custom Angular Material Theme */
+@import '~@angular/material/theming';
+@include mat-core();
+
+$stellar-app-primary: mat-palette($mat-deep-purple);
+$stellar-app-accent: mat-palette($mat-amber, 200, 100, 300);
+$stellar-app-warn: mat-palette($mat-red);
+
+$stellar-app-theme: mat-light-theme($stellar-app-primary, $stellar-app-accent, $stellar-app-warn);
+@include angular-material-theme($stellar-app-theme);
+
+$old-yeller: #ffe082;
+
+body.mat-typography {
+	background: url('~src/assets/images/starry-bg.jpg') left top / cover;
+
+	.stellar {
+		margin-top: 3rem;
+
+		&__title,
+		&__sub-title {
+			font-family: 'Yellowtail', cursive;
+			color: $old-yeller;
+			text-align: center;
+		}
+
+		&__title {
+			font-size: 3rem;
+		}
+
+		&__sub-title {
+			font-size: 2rem;
+		}
+
+		&__search-field {
+			margin-top: 3rem;
+			width: 100%;
+		}
+
+		&__search-input {
+			color: $old-yeller;
+		}
+
+		&__card {
+			height: 365px;
+			margin-bottom: 2rem;
+			cursor: pointer;
+
+			&-image {
+				height: 150px;
+			}
+
+			&-title {
+				font-size: 1.5rem;
+				color: blueviolet;
+			}
+
+			&-text {
+				font-size: 1rem;
+			}
+		}
+	}
+
+}
