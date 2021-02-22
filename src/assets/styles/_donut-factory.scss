@@ -1,5 +1,14 @@
 .donut-factory {
 
+	$title-height: 100px;
+
+	&__heading {
+		height: $title-height;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+	}
+
 	&__conveyor-belt {
 		height: 200px;
 		width: 1190px;
@@ -13,20 +22,20 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			top: 0;
+			top: $title-height;
 			bottom: 0;
 		}
 	}
 
 	&__donut {
 		position: absolute;
-		// left: 75px;
 		top: -90px;
 		height: 225px;
 		width: 225px;
 
 		&:nth-child(1) {
 			animation-duration: 5s;
+			animation-timing-function: ease-out;
 			animation-name: moveleft1;
 			left: 875px;
 
@@ -43,6 +52,7 @@
 
 		&:nth-child(2) {
 			animation-duration: 4s;
+			animation-timing-function: ease-out;
 			animation-name: moveleft2;
 			left: 675px;
 
@@ -59,6 +69,7 @@
 
 		&:nth-child(3) {
 			animation-duration: 3s;
+			animation-timing-function: ease-out;
 			animation-name: moveleft3;
 			left: 475px;
 
@@ -75,6 +86,7 @@
 
 		&:nth-child(4) {
 			animation-duration: 2s;
+			animation-timing-function: ease-out;
 			animation-name: moveleft4;
 			left: 275px;
 
