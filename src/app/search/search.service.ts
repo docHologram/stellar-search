@@ -29,7 +29,7 @@ interface SearchResult {
 	providedIn: 'root'
 })
 export class SearchService {
-	private apiKey = 'AIzaSyByTdlD_lMjUt4jjHOwZheQtMgQBC0ZrlI';
+	private apiKey = 'ENTER_DEVELOPER_KEY_HERE';
 	private searchContext = 'd81d98d565212d4c3';
 
 	constructor(
