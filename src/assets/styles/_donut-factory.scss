@@ -108,5 +108,21 @@
 		&--plain {
 			background: url('~src/assets/images/plain-donut.png') left top;
 		}
+
+		&--vanilla {
+			background: url('~src/assets/images/vanilla-donut.png') left top;
+		}
+
+		&--vanilla-sprinkles {
+			background: url('~src/assets/images/vanilla-sprinkled-donut.png') left top;
+		}
+
+		&--chocolate {
+			background: url('~src/assets/images/chocolate-donut.png') left top;
+		}
+
+		&--chocolate-sprinkles {
+			background: url('~src/assets/images/chocolate-sprinkled-donut.png') left top;
+		}
 	}
 }
