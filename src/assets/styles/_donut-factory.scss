@@ -1,0 +1,128 @@
+.donut-factory {
+
+	$title-height: 100px;
+
+	&__heading {
+		height: $title-height;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+	}
+
+	&__conveyor-belt {
+		height: 200px;
+		width: 1190px;
+		position: relative;
+		background: url('~src/assets/images/conveyor-belt.png') left top;
+
+		&-container {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: $title-height;
+			bottom: 0;
+		}
+	}
+
+	&__donut {
+		position: absolute;
+		top: -90px;
+		height: 225px;
+		width: 225px;
+
+		&:nth-child(1) {
+			animation-duration: 8s;
+			animation-timing-function: linear;
+			animation-name: moveleft1;
+			left: 875px;
+
+			@keyframes moveleft1 {
+				from {
+					left: 75px;
+				}
+
+				to {
+					left: 875px;
+				}
+			}
+		}
+
+		&:nth-child(2) {
+			animation-duration: 6s;
+			animation-timing-function: linear;
+			animation-name: moveleft2;
+			left: 675px;
+
+			@keyframes moveleft2 {
+				from {
+					left: 75px;
+				}
+
+				to {
+					left: 675px;
+				}
+			}
+		}
+
+		&:nth-child(3) {
+			animation-duration: 4s;
+			animation-timing-function: linear;
+			animation-name: moveleft3;
+			left: 475px;
+
+			@keyframes moveleft3 {
+				from {
+					left: 75px;
+				}
+
+				to {
+					left: 475px;
+				}
+			}
+		}
+
+		&:nth-child(4) {
+			animation-duration: 2s;
+			animation-timing-function: linear;
+			animation-name: moveleft4;
+			left: 275px;
+
+			@keyframes moveleft4 {
+				from {
+					left: 75px;
+				}
+
+				to {
+					left: 275px;
+				}
+			}
+		}
+
+		&:nth-child(5) {
+			left: 75px;
+		}
+
+		&--plain {
+			background: url('~src/assets/images/plain-donut.png') left top;
+		}
+
+		&--vanilla {
+			background: url('~src/assets/images/vanilla-donut.png') left top;
+		}
+
+		&--vanilla-sprinkles {
+			background: url('~src/assets/images/vanilla-sprinkled-donut.png') left top;
+		}
+
+		&--chocolate {
+			background: url('~src/assets/images/chocolate-donut.png') left top;
+		}
+
+		&--chocolate-sprinkles {
+			background: url('~src/assets/images/chocolate-sprinkled-donut.png') left top;
+		}
+	}
+}

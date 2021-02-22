@@ -1,0 +1,17 @@
+<main>
+	<header class="container">
+		<div class="row">
+			<div class="col donut-factory__heading">
+				<h1 class="global__title">Donut Factory</h1>
+			</div>
+		</div>
+	</header>
+	<div class="donut-factory__conveyor-belt-container">
+		<div class="donut-factory__conveyor-belt">
+			<div *ngFor="let donut of donuts"
+				class="donut-factory__donut"
+				[ngClass]="donut.class">
+			</div>
+		</div>
+	</div>
+</main>
