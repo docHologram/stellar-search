@@ -20,11 +20,12 @@ export interface Donut {
 	styleUrls: ['./donut-factory.component.scss']
 })
 export class DonutFactoryComponent implements OnInit {
-	readonly timeUnit = 1000;
+	readonly timeUnit = 2000;
 	donuts: Donut[] = [];
 	freshBatch$: Observable<string>;
 	donutMaker$: Observable<number>;
 	donutIcer$: Observable<number>;
+	donutIndex = 0;
 
 	newDonut: Donut = {
 		class: Style.Plain
@@ -34,48 +35,27 @@ export class DonutFactoryComponent implements OnInit {
 
 	ngOnInit(): void {
 
-		this.freshBatch$ = interval(this.timeUnit)
-			.pipe(
-				tap((index: number) => {
-					this.donuts = [];
-					console.log(`fresh batch ${index}`)	
-				}),
-				mapTo('make another batch'),
-				take(1)
-			);
-
 		this.donutMaker$ = interval(this.timeUnit)
 			.pipe(
 				tap((index: number) => {
 					this.donuts.push(this.newDonut);
 					console.log(`make donut ${index + 1}`);
 				}),
-				take(5),
-				delay(4 * this.timeUnit)
-				/* delay(6 * this.timeUnit),
-				tap((index: number) => {
-					this.donuts[index].class = Style.Vanilla;
-					console.log(`style donut ${index + 1}`);	
-				}) */
+				delay(4 * this.timeUnit),
+				take(1)
 			);
 
 		this.donutIcer$ = interval(this.timeUnit)
 			.pipe(
 				tap((index: number) => {
-					if (this.donuts.length) {
-						this.donuts[index].class = Style.Vanilla;
-					}
-					
-					console.log(`style donut ${index + 1}`);	
+					this.donuts[this.donutIndex].class = Style.Vanilla;
 				}),
-				take(5),
-				delay(this.timeUnit)
+				take(5)
 			);
-			
-		this.donutIcer$
+
+		this.donutMaker$
 			.pipe(
-				tap(_ => this.donuts = []),
-				concatMap(_ => this.donutMaker$)
+				concatMap(_ => this.donutIcer$)
 			)
 			.subscribe();
 	}

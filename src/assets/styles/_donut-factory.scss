@@ -34,8 +34,8 @@
 		width: 225px;
 
 		&:nth-child(1) {
-			animation-duration: 5s;
-			animation-timing-function: ease-out;
+			animation-duration: 8s;
+			animation-timing-function: linear;
 			animation-name: moveleft1;
 			left: 875px;
 
@@ -51,8 +51,8 @@
 		}
 
 		&:nth-child(2) {
-			animation-duration: 4s;
-			animation-timing-function: ease-out;
+			animation-duration: 6s;
+			animation-timing-function: linear;
 			animation-name: moveleft2;
 			left: 675px;
 
@@ -68,8 +68,8 @@
 		}
 
 		&:nth-child(3) {
-			animation-duration: 3s;
-			animation-timing-function: ease-out;
+			animation-duration: 4s;
+			animation-timing-function: linear;
 			animation-name: moveleft3;
 			left: 475px;
 
@@ -86,7 +86,7 @@
 
 		&:nth-child(4) {
 			animation-duration: 2s;
-			animation-timing-function: ease-out;
+			animation-timing-function: linear;
 			animation-name: moveleft4;
 			left: 275px;
 
