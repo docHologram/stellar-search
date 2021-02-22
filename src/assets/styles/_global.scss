@@ -1,0 +1,23 @@
+$old-yeller: #ffe082;
+
+body.mat-typography {
+	background: url('~src/assets/images/starry-bg.jpg') left top / cover;
+
+	.global {
+
+		&__title,
+		&__sub-title {
+			font-family: 'Yellowtail', cursive;
+			color: $old-yeller;
+			text-align: center;
+		}
+
+		&__title {
+			font-size: 3rem;
+		}
+
+		&__sub-title {
+			font-size: 2rem;
+		}
+	}
+}
